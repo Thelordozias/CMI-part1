@@ -15,6 +15,33 @@ import { Playfair_Display, Open_Sans, Noto_Sans_TC } from 'next/font/google'
 import './globals.css'
 import { getServerSideURL } from '@/utilities/getURL'
 
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale()
+  const isZh = locale === 'zh'
+
+  const siteName = isZh ? '美國國際關懷協會' : 'USA Care Ministries International'
+  const description = isZh
+    ? '福音進中華，福音出中華 — 動員下一代華裔基督徒走向萬國'
+    : 'Gospel into China, Gospel out of China — Mobilizing the next generation of Chinese Christians to the nations.'
+
+  return {
+    metadataBase: new URL(getServerSideURL()),
+    title: {
+      template: `%s | ${siteName}`,
+      default: siteName,
+    },
+    description,
+    openGraph: mergeOpenGraph({
+      siteName,
+      title: siteName,
+      description,
+    }),
+    twitter: {
+      card: 'summary_large_image',
+    },
+  }
+}
+
 // Font titres — anglais
 const playfair = Playfair_Display({
   subsets: ['latin'],
@@ -69,11 +96,3 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   )
 }
 
-export const metadata: Metadata = {
-  metadataBase: new URL(getServerSideURL()),
-  openGraph: mergeOpenGraph(),
-  twitter: {
-    card: 'summary_large_image',
-    creator: '@payloadcms',
-  },
-}

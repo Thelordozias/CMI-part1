@@ -1,10 +1,10 @@
 {
   "nav": {
     "about": "About Us",
-    "regional": "Regional Ministries",
-    "mobilization": "Mobilization",
-    "news": "Updates",
-    "giving": "Giving"
+    "ministry": "Ministry Updates",
+    "prayer": "Missionary Prayer",
+    "giving": "Giving",
+    "contact": "Contact Us"
   },
   "header": {
     "search": "Search",

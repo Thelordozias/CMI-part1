@@ -78,7 +78,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
       ],
     },
     {
-      label: t('nav.regional'),
+      label: t('nav.ministry'),
       href: `/${locale}/regional`,
       submenu: [
         {
@@ -127,41 +127,41 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
             },
           ],
         },
-      ],
-    },
-    {
-      label: t('nav.mobilization'),
-      href: `/${locale}/mobilization`,
-      submenu: [
         {
-          label: locale === 'en' ? 'Training Courses' : '宣教課程',
-          href: `/${locale}/mobilization/training`,
-        },
-        {
-          label: locale === 'en' ? 'Special Conferences' : '特別聚會',
-          href: `/${locale}/mobilization/conferences`,
-        },
-        {
-          label: locale === 'en' ? 'Prayer Fellowships' : '祈禱團契',
-          href: `/${locale}/mobilization/prayer`,
+          label: locale === 'en' ? 'Mobilization' : '宣教動員',
+          href: `/${locale}/mobilization`,
+          submenu: [
+            {
+              label: locale === 'en' ? 'Training Courses' : '宣教課程',
+              href: `/${locale}/mobilization/training`,
+            },
+            {
+              label: locale === 'en' ? 'Special Conferences' : '特別聚會',
+              href: `/${locale}/mobilization/conferences`,
+            },
+          ],
         },
       ],
     },
     {
-      label: t('nav.news'),
+      label: t('nav.prayer'),
       href: `/${locale}/news`,
       submenu: [
         {
-          label: locale === 'en' ? 'Missionary Letters' : '宣教士代禱信',
-          href: `/${locale}/news/letters`,
+          label: locale === 'en' ? 'Global Outreach' : '胸懷普世',
+          href: `/${locale}/news/global`,
         },
         {
           label: locale === 'en' ? 'Prayer Partners' : '宣教祈禱夥伴',
           href: `/${locale}/news/partners`,
         },
         {
-          label: locale === 'en' ? 'Care Newsletters' : '關懷通訊',
+          label: locale === 'en' ? 'Prayer Newsletter' : '宣教祈禱期採',
           href: `/${locale}/news/newsletters`,
+        },
+        {
+          label: locale === 'en' ? 'Missionary Letters' : '宣教士代禱信',
+          href: `/${locale}/news/letters`,
         },
       ],
     },
@@ -169,11 +169,31 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
       label: t('nav.giving'),
       href: `/${locale}/giving`,
       submenu: [
-        { label: 'Zelle', href: `/${locale}/giving/zelle` },
-        { label: 'PayPal / Credit Card', href: `/${locale}/giving/paypal` },
+        {
+          label: locale === 'en' ? 'Give via Zelle' : '透過 Zelle 奉獻',
+          href: `/${locale}/giving/zelle`,
+        },
+        {
+          label: locale === 'en' ? 'Give via PayPal / Credit Card' : '透過 PayPal、信用卡奉獻',
+          href: `/${locale}/giving/paypal`,
+        },
         {
           label: locale === 'en' ? 'Other Methods' : '其他奉獻方式',
           href: `/${locale}/giving/other`,
+        },
+      ],
+    },
+    {
+      label: t('nav.contact'),
+      href: `/${locale}/contact`,
+      submenu: [
+        {
+          label: locale === 'en' ? 'Contact Info' : '聯絡方式',
+          href: `/${locale}/contact`,
+        },
+        {
+          label: locale === 'en' ? 'Become a Prayer Partner' : '成為宣教祈禱夥伴',
+          href: `/${locale}/news/partners`,
         },
       ],
     },

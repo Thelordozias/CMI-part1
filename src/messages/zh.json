@@ -1,10 +1,10 @@
 {
   "nav": {
     "about": "認識我們",
-    "regional": "區域事工",
-    "mobilization": "宣教動員",
-    "news": "事工動態",
-    "giving": "奉獻支持"
+    "ministry": "事工動態",
+    "prayer": "宣教祈禱",
+    "giving": "奉獻支持",
+    "contact": "聯絡我們"
   },
   "header": {
     "search": "搜尋",
