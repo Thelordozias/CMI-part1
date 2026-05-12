@@ -1,0 +1,18 @@
+{
+  "nav": {
+    "about": "認識我們",
+    "regional": "區域事工",
+    "mobilization": "宣教動員",
+    "news": "事工動態",
+    "giving": "奉獻支持"
+  },
+  "header": {
+    "search": "搜尋",
+    "login": "管理員登入",
+    "language": "English"
+  },
+  "footer": {
+    "prayer": "成為宣教祈禱夥伴",
+    "rights": "© 2026 美國國際關懷協會"
+  }
+}

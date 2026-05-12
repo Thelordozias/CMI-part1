@@ -9,11 +9,19 @@ import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
 import { Users } from './collections/Users'
+import { Events } from './collections/Events'
+import { Missionaries } from './collections/Missionaries'
+import { RegionalUpdates } from './collections/RegionalUpdates'
+import { PrayerRequests } from './collections/PrayerRequests'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
+import { SiteSettings } from './globals/SiteSettings'
+import { FooterContent } from './globals/FooterContent'
 import { plugins } from './plugins'
 import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
+import HeroSlides from './collections/HeroSlides'
+
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -60,9 +68,20 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URL || '',
   }),
-  collections: [Pages, Posts, Media, Categories, Users],
+  collections: [
+    Pages,
+    Posts,
+    Media,
+    Categories,
+    Users,
+    HeroSlides,
+    Events,
+    Missionaries,
+    RegionalUpdates,
+    PrayerRequests,
+  ],
   cors: [getServerSideURL()].filter(Boolean),
-  globals: [Header, Footer],
+  globals: [Header, Footer, SiteSettings, FooterContent],
   plugins,
   secret: process.env.PAYLOAD_SECRET,
   sharp,

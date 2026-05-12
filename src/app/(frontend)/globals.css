@@ -161,6 +161,12 @@
   --success: oklch(28% 0.1 200deg);
   --warning: oklch(35% 0.08 70deg);
   --error: oklch(45% 0.1 25deg);
+
+  /* CMI dark overrides */
+  --background: #1A1A2E;
+  --foreground: #edede9;
+  --cmi-bg-light: #1A1A2E;
+  --cmi-text-primary: #edede9;
 }
 
 @theme inline {
@@ -216,9 +222,126 @@
 
 html {
   opacity: 0;
+  transition: opacity 0.15s ease;
 }
 
 html[data-theme='dark'],
 html[data-theme='light'] {
-  opacity: initial;
+  opacity: 1;
+}
+
+:root {
+  /* ... garder tout ce qui existe déjà ... */
+
+  /* ============================================
+     CMI CUSTOM DESIGN TOKENS
+     ============================================ */
+
+  /* FONTS */
+  --font-display: var(--font-playfair), Georgia, serif;
+  --font-body: var(--font-open-sans), Helvetica, sans-serif;
+  --font-chinese: var(--font-noto-sans-tc), sans-serif;
+
+  /* COULEURS CMI */
+  --cmi-purple: #6B21A8;
+  --cmi-purple-light: #9333EA;
+  --cmi-purple-dark: #4C1D95;
+
+  --cmi-gold: #D4A017;
+  --cmi-gold-light: #F59E0B;
+  --cmi-gold-dark: #B45309;
+
+  --cmi-blue: #1E40AF;
+  --cmi-blue-light: #3B82F6;
+  --cmi-blue-dark: #1E3A8A;
+
+  --cmi-bg-light: #fafaf9;
+  --cmi-bg-dark: #1A1A2E;
+
+  --cmi-text-primary: #edede9;
+  --cmi-text-secondary: #6B7280;
+  --cmi-text-dark: #1F2937;
+}
+
+/* ============================================
+   CMI GLOBAL STYLES
+   ============================================ */
+
+/* Fonts selon la langue */
+:lang(en) body {
+  font-family: var(--font-body);
+}
+
+:lang(zh) body {
+  font-family: var(--font-chinese);
+}
+
+/* Titres anglais */
+:lang(en) h1,
+:lang(en) h2,
+:lang(en) h3,
+:lang(en) h4 {
+  font-family: var(--font-display);
+  color: var(--cmi-text-dark);
+}
+
+/* Titres chinois */
+:lang(zh) h1,
+:lang(zh) h2,
+:lang(zh) h3,
+:lang(zh) h4 {
+  font-family: var(--font-chinese);
+}
+
+/* Bouton principal CMI */
+.btn-cmi-primary {
+  background-color: var(--cmi-purple);
+  color: white;
+  padding: 0.5rem 1.25rem;
+  border-radius: 0.375rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.btn-cmi-primary:hover {
+  background-color: var(--cmi-purple-light);
+}
+
+/* Bouton secondaire CMI */
+.btn-cmi-secondary {
+  background-color: var(--cmi-gold);
+  color: white;
+  padding: 0.5rem 1.25rem;
+  border-radius: 0.375rem;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.btn-cmi-secondary:hover {
+  background-color: var(--cmi-gold-dark);
+}
+
+/* ============================================
+   CMI ANIMATIONS
+   ============================================ */
+
+@keyframes kenburns {
+  from {
+    transform: scale(1) translate(0, 0);
+  }
+  to {
+    transform: scale(1.08) translate(-1.5%, -0.8%);
+  }
+}
+
+@keyframes heroFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

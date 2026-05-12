@@ -72,6 +72,11 @@ export interface Config {
     media: Media;
     categories: Category;
     users: User;
+    'hero-slides': HeroSlide;
+    events: Event;
+    missionaries: Missionary;
+    'regional-updates': RegionalUpdate;
+    'prayer-requests': PrayerRequest;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -94,6 +99,11 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
+    'hero-slides': HeroSlidesSelect<false> | HeroSlidesSelect<true>;
+    events: EventsSelect<false> | EventsSelect<true>;
+    missionaries: MissionariesSelect<false> | MissionariesSelect<true>;
+    'regional-updates': RegionalUpdatesSelect<false> | RegionalUpdatesSelect<true>;
+    'prayer-requests': PrayerRequestsSelect<false> | PrayerRequestsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -112,10 +122,14 @@ export interface Config {
   globals: {
     header: Header;
     footer: Footer;
+    'site-settings': SiteSetting;
+    'footer-content': FooterContent;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
+    'footer-content': FooterContentSelect<false> | FooterContentSelect<true>;
   };
   locale: null;
   widgets: {
@@ -420,6 +434,10 @@ export interface Category {
 export interface User {
   id: string;
   name?: string | null;
+  /**
+   * super-admin: full access | admin: manage content | editor: create/edit only
+   */
+  roles?: ('super-admin' | 'admin' | 'editor')[] | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -782,6 +800,286 @@ export interface Form {
   createdAt: string;
 }
 /**
+ * Manage homepage hero slider images and videos
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "hero-slides".
+ */
+export interface HeroSlide {
+  id: string;
+  type: 'image' | 'video';
+  /**
+   * Upload image or video for this slide
+   */
+  media: string | Media;
+  titleEn: string;
+  /**
+   * Leave empty to use English title
+   */
+  titleZh?: string | null;
+  subtitleEn?: string | null;
+  /**
+   * Leave empty to use English subtitle
+   */
+  subtitleZh?: string | null;
+  ctaPrimary?: {
+    labelEn?: string | null;
+    labelZh?: string | null;
+    href?: string | null;
+  };
+  ctaSecondary?: {
+    labelEn?: string | null;
+    labelZh?: string | null;
+    href?: string | null;
+  };
+  /**
+   * Lower number = shown first
+   */
+  order?: number | null;
+  /**
+   * Uncheck to hide this slide without deleting it
+   */
+  isActive?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Manage CMI events and conferences
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events".
+ */
+export interface Event {
+  id: string;
+  titleEn: string;
+  /**
+   * Leave empty for auto-translation
+   */
+  titleZh?: string | null;
+  date: string;
+  endDate?: string | null;
+  location_en?: string | null;
+  /**
+   * Leave empty for auto-translation
+   */
+  location_zh?: string | null;
+  description_en?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Leave empty for auto-translation
+   */
+  description_zh?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  image?: (string | null) | Media;
+  /**
+   * External URL for event registration
+   */
+  registrationLink?: string | null;
+  isFeatured?: boolean | null;
+  isActive?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Manage CMI missionaries and their profiles
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "missionaries".
+ */
+export interface Missionary {
+  id: string;
+  name: string;
+  region: 'asia' | 'middle-east' | 'africa' | 'usa';
+  country?: string | null;
+  photo?: (string | null) | Media;
+  bio_en?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Leave empty for auto-translation
+   */
+  bio_zh?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  prayerNeeds_en?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Leave empty for auto-translation
+   */
+  prayerNeeds_zh?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Not displayed publicly
+   */
+  email?: string | null;
+  joinedDate?: string | null;
+  /**
+   * Uncheck for alumni or retired missionaries
+   */
+  isActive?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Manage regional ministry updates and news
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "regional-updates".
+ */
+export interface RegionalUpdate {
+  id: string;
+  title_en: string;
+  /**
+   * Leave empty for auto-translation
+   */
+  title_zh?: string | null;
+  region:
+    | 'asia-cambodia'
+    | 'asia-indonesia'
+    | 'asia-taiwan'
+    | 'middle-east-turkey'
+    | 'middle-east-lebanon'
+    | 'africa-ghana'
+    | 'usa-socal';
+  date: string;
+  content_en?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Leave empty for auto-translation
+   */
+  content_zh?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  media?: (string | null) | Media;
+  /**
+   * Check to make this update visible on the website
+   */
+  isPublished?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Prayer requests and lead captures from website visitors
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "prayer-requests".
+ */
+export interface PrayerRequest {
+  id: string;
+  name?: string | null;
+  email?: string | null;
+  source?: ('chatbot' | 'form' | 'newsletter' | 'prayer-partner') | null;
+  message?: string | null;
+  locale?: ('en' | 'zh') | null;
+  /**
+   * Check when staff has responded to this request
+   */
+  isFollowedUp?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
@@ -990,6 +1288,26 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'users';
         value: string | User;
+      } | null)
+    | ({
+        relationTo: 'hero-slides';
+        value: string | HeroSlide;
+      } | null)
+    | ({
+        relationTo: 'events';
+        value: string | Event;
+      } | null)
+    | ({
+        relationTo: 'missionaries';
+        value: string | Missionary;
+      } | null)
+    | ({
+        relationTo: 'regional-updates';
+        value: string | RegionalUpdate;
+      } | null)
+    | ({
+        relationTo: 'prayer-requests';
+        value: string | PrayerRequest;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -1339,6 +1657,7 @@ export interface CategoriesSelect<T extends boolean = true> {
  */
 export interface UsersSelect<T extends boolean = true> {
   name?: T;
+  roles?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -1355,6 +1674,105 @@ export interface UsersSelect<T extends boolean = true> {
         createdAt?: T;
         expiresAt?: T;
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "hero-slides_select".
+ */
+export interface HeroSlidesSelect<T extends boolean = true> {
+  type?: T;
+  media?: T;
+  titleEn?: T;
+  titleZh?: T;
+  subtitleEn?: T;
+  subtitleZh?: T;
+  ctaPrimary?:
+    | T
+    | {
+        labelEn?: T;
+        labelZh?: T;
+        href?: T;
+      };
+  ctaSecondary?:
+    | T
+    | {
+        labelEn?: T;
+        labelZh?: T;
+        href?: T;
+      };
+  order?: T;
+  isActive?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events_select".
+ */
+export interface EventsSelect<T extends boolean = true> {
+  titleEn?: T;
+  titleZh?: T;
+  date?: T;
+  endDate?: T;
+  location_en?: T;
+  location_zh?: T;
+  description_en?: T;
+  description_zh?: T;
+  image?: T;
+  registrationLink?: T;
+  isFeatured?: T;
+  isActive?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "missionaries_select".
+ */
+export interface MissionariesSelect<T extends boolean = true> {
+  name?: T;
+  region?: T;
+  country?: T;
+  photo?: T;
+  bio_en?: T;
+  bio_zh?: T;
+  prayerNeeds_en?: T;
+  prayerNeeds_zh?: T;
+  email?: T;
+  joinedDate?: T;
+  isActive?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "regional-updates_select".
+ */
+export interface RegionalUpdatesSelect<T extends boolean = true> {
+  title_en?: T;
+  title_zh?: T;
+  region?: T;
+  date?: T;
+  content_en?: T;
+  content_zh?: T;
+  media?: T;
+  isPublished?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "prayer-requests_select".
+ */
+export interface PrayerRequestsSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  source?: T;
+  message?: T;
+  locale?: T;
+  isFollowedUp?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1690,6 +2108,123 @@ export interface Footer {
   createdAt?: string | null;
 }
 /**
+ * Global site settings — name, logo, mission statement, contact info, giving details
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings".
+ */
+export interface SiteSetting {
+  id: string;
+  siteName?: string | null;
+  siteTagline_en?: string | null;
+  siteTagline_zh?: string | null;
+  logo?: (string | null) | Media;
+  favicon?: (string | null) | Media;
+  whoWeAre_title_en?: string | null;
+  whoWeAre_title_zh?: string | null;
+  whoWeAre_content_en?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  whoWeAre_content_zh?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  whoWeAre_image?: (string | null) | Media;
+  missionStatement_en?: string | null;
+  missionStatement_zh?: string | null;
+  contactEmail?: string | null;
+  contactPhone?: string | null;
+  contactAddress_en?: string | null;
+  contactAddress_zh?: string | null;
+  facebookUrl?: string | null;
+  youtubeUrl?: string | null;
+  instagramUrl?: string | null;
+  zelleInfo_en?: string | null;
+  zelleInfo_zh?: string | null;
+  paypalLink?: string | null;
+  otherGiving_en?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  otherGiving_zh?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Footer text, links, and Prayer Partner CTA
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer-content".
+ */
+export interface FooterContent {
+  id: string;
+  prayerPartnerCTA_en?: string | null;
+  prayerPartnerCTA_zh?: string | null;
+  prayerPartnerLink?: string | null;
+  copyrightText?: string | null;
+  /**
+   * Links shown in the footer navigation
+   */
+  footerLinks?:
+    | {
+        label_en: string;
+        label_zh?: string | null;
+        href: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
@@ -1729,6 +2264,60 @@ export interface FooterSelect<T extends boolean = true> {
               url?: T;
               label?: T;
             };
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings_select".
+ */
+export interface SiteSettingsSelect<T extends boolean = true> {
+  siteName?: T;
+  siteTagline_en?: T;
+  siteTagline_zh?: T;
+  logo?: T;
+  favicon?: T;
+  whoWeAre_title_en?: T;
+  whoWeAre_title_zh?: T;
+  whoWeAre_content_en?: T;
+  whoWeAre_content_zh?: T;
+  whoWeAre_image?: T;
+  missionStatement_en?: T;
+  missionStatement_zh?: T;
+  contactEmail?: T;
+  contactPhone?: T;
+  contactAddress_en?: T;
+  contactAddress_zh?: T;
+  facebookUrl?: T;
+  youtubeUrl?: T;
+  instagramUrl?: T;
+  zelleInfo_en?: T;
+  zelleInfo_zh?: T;
+  paypalLink?: T;
+  otherGiving_en?: T;
+  otherGiving_zh?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer-content_select".
+ */
+export interface FooterContentSelect<T extends boolean = true> {
+  prayerPartnerCTA_en?: T;
+  prayerPartnerCTA_zh?: T;
+  prayerPartnerLink?: T;
+  copyrightText?: T;
+  footerLinks?:
+    | T
+    | {
+        label_en?: T;
+        label_zh?: T;
+        href?: T;
         id?: T;
       };
   updatedAt?: T;
